@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ node.title }} - 详情</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; max-width: 800px; margin: 0 auto;}
+        .main-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;}
+        .child-card { background: white; padding: 15px; border-left: 4px solid #1a73e8; margin-top: 15px; border-radius: 4px; }
+        .title { font-size: 1.5em; font-weight: bold; color: #1a73e8; }
+        .meta { color: #666; font-size: 0.9em; margin-top: 5px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        .btn { text-decoration: none; padding: 8px 15px; border-radius: 4px; color: white; background-color: #1a73e8; font-size: 14px;}
+        h3 { margin-top: 40px; border-bottom: 2px solid #ddd; padding-bottom: 10px;}
+    </style>
+</head>
+<body>
+
+    <a href="/" style="text-decoration: none; color: #666;">&larr; 回到大厅</a>
+
+    <div class="main-card">
+        <div class="title">{{ node.title }}</div>
+        <div class="meta">提出者: {{ node.creator.username }} | 时间: {{ node.created_at|date:"Y-m-d H:i" }}</div>
+        <div class="content">{{ node.content }}</div>
+        
+        <div style="margin-top: 20px;">
+            {% if user.is_authenticated %}
+                <a href="/node/{{ node.id }}/branch/" class="btn">+ 衍生新观点</a>
+                
+                {% if user != node.creator %}
+                   <a href="/tip/{{ node.id }}/" class="btn" style="background-color: #fbbc05; margin-left: 10px;">🎁 打赏</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <h3>🌱 衍生出的观点 ({{ children.count }})</h3>
+    
+    {% for child in children %}
+        <div class="child-card">
+            <div style="font-weight: bold;"><a href="/node/{{ child.id }}/" style="text-decoration: none; color: #333;">{{ child.title }}</a></div>
+            <div style="font-size: 0.8em; color: #666;">由 {{ child.creator.username }} 提出</div>
+            <div style="margin-top: 5px;">{{ child.content }}</div>
+        </div>
+    {% empty %}
+        <p style="color: #888; font-style: italic;">还没有人基于这个观点延伸出新想法，快来做第一个吧！</p>
+    {% endfor %}
+
+</body>
+</html>

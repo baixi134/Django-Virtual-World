@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>转账中心</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0;}
+        .box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 350px; }
+        h2 { text-align: center; color: #fbbc05; } /* 金色 */
+        input { width: 100%; padding: 10px; margin: 5px 0 15px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #fbbc05; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; text-shadow: 0 1px 1px rgba(0,0,0,0.2);}
+        button:hover { background-color: #f9ab00; }
+        .errorlist { color: red; font-size: 12px; list-style: none; padding: 0;}
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>💸 虚拟银行转账</h2>
+        <div style="text-align: center; margin-bottom: 20px; color: #666;">
+            当前余额: <strong>{{ user.coins }}</strong>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">确认转账</button>
+        </form>
+        <p style="text-align: center;"><a href="/">取消</a></p>
+    </div>
+
+</body>
+</html>

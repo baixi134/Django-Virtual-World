@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>打赏观点</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0;}
+        .box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 350px; text-align: center;}
+        h2 { color: #ff6d00; }
+        .node-title { background: #f5f5f5; padding: 10px; border-radius: 4px; margin: 15px 0; font-style: italic; color: #555;}
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; text-align: center; font-size: 1.2em;}
+        button { width: 100%; padding: 10px; background-color: #ff6d00; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;}
+        button:hover { background-color: #e65100; }
+        .error { color: red; font-size: 14px; margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>🎁 打赏作者</h2>
+        <p>你正在打赏用户 <strong>{{ node.creator.username }}</strong></p>
+        
+        <div class="node-title">
+            "{{ node.title }}"
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for message in messages %}
+                <div class="error">{{ message }}</div>
+            {% endfor %}
+
+            <input type="number" name="amount" placeholder="输入金额 (例如: 5)" min="1" required>
+            
+            <button type="submit">确认支付</button>
+        </form>
+        <p><a href="/">取消</a></p>
+    </div>
+
+</body>
+</html>

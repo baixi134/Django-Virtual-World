@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>加入虚拟世界</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0;}
+        .box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 300px; }
+        h2 { text-align: center; color: #1a73e8; }
+        input { width: 100%; padding: 10px; margin: 5px 0 15px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #1a73e8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;}
+        button:hover { background-color: #1557b0; }
+        .helptext { font-size: 12px; color: #666; display: none;} /* 隐藏复杂的密码提示 */
+        ul { list-style: none; padding: 0; color: red; font-size: 12px;}
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>🚀 加入新世界</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+            
+            <button type="submit">立即注册</button>
+        </form>
+        <p style="text-align: center; font-size: 0.9em;">
+            <a href="/">回到首页</a>
+        </p>
+    </div>
+
+</body>
+</html>
