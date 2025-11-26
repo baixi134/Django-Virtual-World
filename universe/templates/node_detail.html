@@ -1,48 +1,187 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ node.title }} - 详情</title>
     <style>
-        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; max-width: 800px; margin: 0 auto;}
-        .main-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;}
-        .child-card { background: white; padding: 15px; border-left: 4px solid #1a73e8; margin-top: 15px; border-radius: 4px; }
-        .title { font-size: 1.5em; font-weight: bold; color: #1a73e8; }
-        .meta { color: #666; font-size: 0.9em; margin-top: 5px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;}
-        .btn { text-decoration: none; padding: 8px 15px; border-radius: 4px; color: white; background-color: #1a73e8; font-size: 14px;}
-        h3 { margin-top: 40px; border-bottom: 2px solid #ddd; padding-bottom: 10px;}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .main-card { 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .child-card { 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px; 
+            border-left: 4px solid #667eea;
+            margin-top: 15px; 
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .child-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .title { 
+            font-size: 2em; 
+            font-weight: 700; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        .meta { 
+            color: #666; 
+            font-size: 0.95em; 
+            margin-top: 10px; 
+            margin-bottom: 25px; 
+            border-bottom: 2px solid #eee; 
+            padding-bottom: 15px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .content {
+            color: #444;
+            line-height: 1.8;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .btn { 
+            text-decoration: none; 
+            padding: 12px 24px; 
+            border-radius: 10px; 
+            color: white; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-yellow {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        h3 { 
+            margin-top: 40px; 
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.5em;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        .child-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .child-title a {
+            text-decoration: none;
+            color: #667eea;
+            transition: color 0.3s ease;
+        }
+        .child-title a:hover {
+            color: #764ba2;
+        }
+        .child-meta {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        .child-content {
+            color: #555;
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+        .empty-message {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
 
-    <a href="/" style="text-decoration: none; color: #666;">&larr; 回到大厅</a>
+    <div class="container">
+        <a href="/" class="back-link">&larr; 回到大厅</a>
 
-    <div class="main-card">
-        <div class="title">{{ node.title }}</div>
-        <div class="meta">提出者: {{ node.creator.username }} | 时间: {{ node.created_at|date:"Y-m-d H:i" }}</div>
-        <div class="content">{{ node.content }}</div>
-        
-        <div style="margin-top: 20px;">
-            {% if user.is_authenticated %}
-                <a href="/node/{{ node.id }}/branch/" class="btn">+ 衍生新观点</a>
-                
-                {% if user != node.creator %}
-                   <a href="/tip/{{ node.id }}/" class="btn" style="background-color: #fbbc05; margin-left: 10px;">🎁 打赏</a>
+        <div class="main-card">
+            <div class="title">{{ node.title }}</div>
+            <div class="meta">
+                <span>👤 {{ node.creator.username }}</span>
+                <span>🕒 {{ node.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            <div class="content">{{ node.content }}</div>
+            
+            <div style="margin-top: 30px;">
+                {% if user.is_authenticated %}
+                    <a href="/node/{{ node.id }}/branch/" class="btn">+ 衍生新观点</a>
+                    
+                    {% if user != node.creator %}
+                       <a href="/tip/{{ node.id }}/" class="btn btn-yellow">🎁 打赏</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
+            </div>
         </div>
-    </div>
 
-    <h3>🌱 衍生出的观点 ({{ children.count }})</h3>
-    
-    {% for child in children %}
-        <div class="child-card">
-            <div style="font-weight: bold;"><a href="/node/{{ child.id }}/" style="text-decoration: none; color: #333;">{{ child.title }}</a></div>
-            <div style="font-size: 0.8em; color: #666;">由 {{ child.creator.username }} 提出</div>
-            <div style="margin-top: 5px;">{{ child.content }}</div>
-        </div>
-    {% empty %}
-        <p style="color: #888; font-style: italic;">还没有人基于这个观点延伸出新想法，快来做第一个吧！</p>
-    {% endfor %}
+        <h3>🌱 衍生出的观点 ({{ children.count }})</h3>
+        
+        {% for child in children %}
+            <div class="child-card">
+                <div class="child-title">
+                    <a href="/node/{{ child.id }}/">{{ child.title }}</a>
+                </div>
+                <div class="child-meta">由 {{ child.creator.username }} 提出</div>
+                <div class="child-content">{{ child.content }}</div>
+            </div>
+        {% empty %}
+            <div class="empty-message">
+                还没有人基于这个观点延伸出新想法，快来做第一个吧！✨
+            </div>
+        {% endfor %}
+    </div>
 
 </body>
 </html>
