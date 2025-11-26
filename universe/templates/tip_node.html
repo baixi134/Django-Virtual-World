@@ -1,23 +1,119 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>打赏观点</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0;}
-        .box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 350px; text-align: center;}
-        h2 { color: #ff6d00; }
-        .node-title { background: #f5f5f5; padding: 10px; border-radius: 4px; margin: 15px 0; font-style: italic; color: #555;}
-        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; text-align: center; font-size: 1.2em;}
-        button { width: 100%; padding: 10px; background-color: #ff6d00; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;}
-        button:hover { background-color: #e65100; }
-        .error { color: red; font-size: 14px; margin-bottom: 10px;}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .box { 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h2 { 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .user-info {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        .user-info strong {
+            color: #333;
+        }
+        .node-title { 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px; 
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
+        }
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 20px 0; 
+            border: 2px solid #e0e0e0;
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            text-align: center; 
+            font-size: 1.3em;
+            font-weight: 600;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+        }
+        input:focus {
+            border-color: #f5576c;
+            box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+        }
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+        .error { 
+            color: #e74c3c; 
+            font-size: 14px; 
+            margin-bottom: 15px;
+            background: #fee;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+        .cancel-link {
+            display: block;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .cancel-link:hover {
+            color: #f5576c;
+        }
     </style>
 </head>
 <body>
 
     <div class="box">
         <h2>🎁 打赏作者</h2>
-        <p>你正在打赏用户 <strong>{{ node.creator.username }}</strong></p>
+        <div class="user-info">
+            你正在打赏用户 <strong>{{ node.creator.username }}</strong>
+        </div>
         
         <div class="node-title">
             "{{ node.title }}"
@@ -34,7 +130,7 @@
             
             <button type="submit">确认支付</button>
         </form>
-        <p><a href="/">取消</a></p>
+        <a href="/" class="cancel-link">取消</a>
     </div>
 
 </body>
